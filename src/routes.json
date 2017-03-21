@@ -17,12 +17,12 @@
     "page": "./about"
   },
   {
-    "path": "/chessboard",
-    "page": "./chessboard"
+    "path": "/compiler",
+    "page": "./compiler"
   },
   {
-    "path": "/dropTargets",
-    "page": "./dropTargets"
+    "path": "/editor",
+    "page": "./editor"
   },
   {
     "path": "/tasks/:status(pending|completed)?",

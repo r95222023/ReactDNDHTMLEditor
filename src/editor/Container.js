@@ -2,6 +2,30 @@ import React, {Component} from 'react';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Block from './Block';
+import SourceList from './SourceList';
+
+import { setPath, getPath} from './services'
+
+let testContent = {
+  tag:'div',
+  class:'layout-row',
+  style: {width:'500px', height:'200px', backgroundColor:'yellow'},
+  children:[{
+    tag:'div',
+    class:'layout-column',
+    style:{width:'200px', height:'100px', backgroundColor:'blue',margin:'10px'},
+    children:[{
+      tag:'div',
+      style:{width:'100px', height:'50px', backgroundColor:'green',margin:'10px'}
+    },{
+      tag:'div',
+      style:{width:'100px', height:'50px', backgroundColor:'green',margin:'10px'}
+    }]
+  },{
+    tag:'div',
+    style:{width:'200px', height:'100px', backgroundColor:'blue', margin:'10px'}
+  }],
+};
 
 function parsePath(path) {
   let pList =[];
@@ -12,35 +36,11 @@ function parsePath(path) {
   return pList;
 }
 
-function setPath(obj, pList, value) {
-  let schema = obj;  // a moving reference to internal objects within obj
-  let len = pList.length;
-  for (let i = 0; i < len - 1; i++) {
-    let elem = pList[i];
-    if (!schema[elem]) schema[elem] = {};
-    schema = schema[elem];
-  }
-
-  schema[pList[len - 1]] = value;
-}
-
-function getPath(obj, pList) {
-  let schema = obj;  // a moving reference to internal objects within obj
-  let len = pList.length;
-  for (let i = 0; i < len - 1; i++) {
-    let elem = pList[i];
-    if (!schema[elem]) return null;
-    schema = schema[elem];
-  }
-
-  return schema[pList[len - 1]];
-}
-
 class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: props.content || [],
+      content: props.content || testContent,
     };
     let dnd = {};
     dnd.insert = this.insert.bind(this);
@@ -53,17 +53,22 @@ class Container extends Component {
   insert(path, index, item, isTemp) {
     let pList = parsePath(path);
     let target = getPath(this.state.content, pList);
-    target.forEach((_item, _index) => {
-      if (_item.isTemp) {
-        target.splice(_index, 1);
-      }
-    });
-    if (isTemp) {
-      item.isTemp = true;
-    } else {
-      delete item.isTemp;
+
+    if(target.children){
+      target.children.splice(index,0,item);
     }
-    target.splice(index, 0, item);
+    console.log(this.state);
+    // target.forEach((_item, _index) => {
+    //   if (_item.isTemp) {
+    //     target.splice(_index, 1);
+    //   }
+    // });
+    // if (isTemp) {
+    //   item.isTemp = true;
+    // } else {
+    //   delete item.isTemp;
+    // }
+    // target.splice(index, 0, item);
     this.setState({content: this.state.content});
   }
 
@@ -84,8 +89,9 @@ class Container extends Component {
 
   modify(path, value) {
     let pList = parsePath(path);
-    setPath(this.state.content, pList, value);
-    this.setState({content: this.state.content});
+    console.log(pList)
+    // setPath(this.state.content, pList, value);
+    // this.setState({content: this.state.content});
   }
 
   render() {
@@ -94,7 +100,14 @@ class Container extends Component {
     //   test.push(<div key={i} style={{width:'100px',height:'100px', backgroundColor:'grey'}}></div>);
     // }
     return (
-      <Block content={this.state.content} dnd={this.dnd} path={[]} />
+    <div className={'layout-row'}>
+      <div className={'flex-20'}>
+        <SourceList />
+      </div>
+      <div className={'flex'}>
+        <Block content={this.state.content} dnd={this.dnd} path={[]} />
+      </div>
+    </div>
     );
   }
 }
