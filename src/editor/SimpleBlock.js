@@ -6,7 +6,6 @@ import { getComponent } from '../editor/services'
 export default class Block extends Component {
   static propTypes = {
     content: PropTypes.object.isRequired,
-    path: PropTypes.array.isRequired,
     children: PropTypes.node,
   };
 

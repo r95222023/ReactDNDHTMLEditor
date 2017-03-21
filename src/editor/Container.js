@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Block from './Block';
+import DraggableBlock from './DraggableBlock';
+
 import SourceList from './SourceList';
 
 import { setPath, getPath} from './services'
@@ -105,7 +107,7 @@ class Container extends Component {
         <SourceList />
       </div>
       <div className={'flex'}>
-        <Block content={this.state.content} dnd={this.dnd} path={[]} />
+        <DraggableBlock content={this.state.content} dnd={this.dnd} path={[]} />
       </div>
     </div>
     );
