@@ -2,7 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import {DropTarget, DragSource} from 'react-dnd';
 import ItemTypes from './ItemTypes';
-import SimpleBlock from './SimpleBlock';
+// import SimpleBlock from './SimpleBlock';
+import EditableBlock from './EditableBlock';
+import UiBlock from './UiBlock';
+
+
 
 function getRelativePosition(component, mousePosition) {
   if (!mousePosition) return;
@@ -60,13 +64,13 @@ const boxTarget = {
     // dropOrHover('drop', props, monitor, component);
     console.log('drop')
   },
-  // hover(props, monitor, component) {
-  //   if(!props.dnd) return;
-  //   // console.log(props)
-  //   // dropOrHover('hover', props, monitor, component);
-  //   console.log('hover')
-  //
-  // },
+  hover(props, monitor, component) {
+    if (!props.dnd) return;
+    // console.log(props)
+    // dropOrHover('hover', props, monitor, component);
+    console.log('hover')
+
+  },
 };
 
 const boxSource = {
@@ -79,6 +83,9 @@ const boxSource = {
   },
 };
 
+let onHoverStyle = {
+  border: '1px dashed gray',
+};
 
 class DraggableBlock extends Component {
   static propTypes = {
@@ -93,9 +100,7 @@ class DraggableBlock extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {hover: false};
   }
-
 
   render() {
     const {isOverCurrent, connectDropTarget, connectDragSource, content, dnd, path} = this.props;
@@ -103,10 +108,14 @@ class DraggableBlock extends Component {
     if (isOverCurrent) {
       //TODO:set  global selected itemId
     }
-    console.log(path)
-    let children = null;
-    if (content.children) {
-      children = [];
+    // console.log(path)
+    let children = [];
+    // if(content.hover){
+    //   children.push(<UiBlock path={path} key={'uiblock'}></UiBlock>)
+    // }
+    children.push(<UiBlock path={path} key={'uiblock'}></UiBlock>)
+
+    if(content.children){
       content.children.forEach((child, index) => {
         let newPath = path.slice();
         newPath.push(index);
@@ -120,13 +129,23 @@ class DraggableBlock extends Component {
           }))(DraggableBlock)),
           {content: child, dnd, path: newPath, key: index},
         ))
-      })
+      });
     }
+
+    children = children.length? children:null;
+
+
     return React.createElement(
-      SimpleBlock,
-      {content, ref: (instance)=>{
-        connectDropTarget(connectDragSource(findDOMNode(instance)))
-      }},
+      EditableBlock,
+      {
+        content,
+        path,
+        dnd,
+        ref: (instance) => {
+          connectDropTarget(findDOMNode(instance));
+          connectDragSource(findDOMNode(instance));
+        }
+      },
       children,
     );
   }
