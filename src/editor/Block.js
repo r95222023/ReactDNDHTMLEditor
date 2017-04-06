@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import {DropTarget, DragSource} from 'react-dnd';
 import ItemTypes from './ItemTypes';
-import {getComponent} from './services'
+import {getComponent} from './basics'
 
 const onHoverStyle = {
   border: '1px dashed gray !important',

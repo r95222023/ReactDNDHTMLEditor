@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import { getComponent } from '../editor/services'
+import { getComponent } from '../editor/basics'
 
 
 export default class Block extends Component {
@@ -32,7 +32,7 @@ export default class Block extends Component {
     }
     return React.createElement(
       getComponent(content.tag),
-      Object.assign({className:content.class, style:content.style}, content.props),
+      Object.assign({className:content.class, style:Object.assign({position:'relative'},content.style)}, content.props),
       children,
     );
   }

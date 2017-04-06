@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
 import ItemTypes from './ItemTypes';
-import getComponent from './services'
 
 const style = {
   width: 400,
