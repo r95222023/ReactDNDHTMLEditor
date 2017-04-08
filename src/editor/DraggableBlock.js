@@ -4,7 +4,7 @@ import {DropTarget, DragSource} from 'react-dnd';
 import ItemTypes from './ItemTypes';
 // import SimpleBlock from './SimpleBlock';
 import EditableBlock from './EditableBlock';
-import UiBlock from './UiBlock';
+import UiBlock from './ui/UiBlock';
 
 
 
@@ -113,7 +113,7 @@ class DraggableBlock extends Component {
     // if(content.hover){
     //   children.push(<UiBlock path={path} key={'uiblock'}></UiBlock>)
     // }
-    children.push(<UiBlock path={path} key={'uiblock'}></UiBlock>)
+    children.push(<UiBlock path={path} key={'uiblock'}></UiBlock>);
 
     if(content.children){
       content.children.forEach((child, index) => {

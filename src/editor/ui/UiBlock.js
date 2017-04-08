@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import UiBlockToolbar from './UiBlockToolbar';
 
 const uiContainer = {
   position: 'absolute',
@@ -50,22 +51,9 @@ borderStyle.common = {
   zIndex: '11'
 };
 
-function getBorderStyle(direction, hover) {
-  return Object.assign({display: hover? 'block' : 'none'}, borderStyle.common, borderStyle[direction])
-}
 
-export class Toolbar extends Component {
-  static propTypes = {
-    path: PropTypes.array.isRequired,
-    children: PropTypes.node,
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-  }
+function getBorderStyle(direction) {
+  return Object.assign({display: 'block'}, borderStyle.common, borderStyle[direction])
 }
 
 export default class UiBlock extends Component {
@@ -76,9 +64,11 @@ export default class UiBlock extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {hover: false};
+    this.state = {hover: false, isMenuOpen:false};
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
+    this.onMenuOpen = this.onMenuOpen.bind(this);
+    this.onMenuClose = this.onMenuClose.bind(this);
   }
 
   onMouseOver() {
@@ -87,28 +77,45 @@ export default class UiBlock extends Component {
   }
 
   onMouseOut() {
+    if (this.state.isMenuOpen) return;
     this.setState({hover: false});
     console.log('out', this.props.path)
   }
 
+  onMenuOpen() {
+    console.log('menu open')
+    this.state.isMenuOpen=true;
+    // this.setState({isMenuOpen: true});
+  }
+
+  onMenuClose() {
+    this.state.isMenuOpen=false;
+    setTimeout(()=>{
+      this.setState({isMenuOpen: false, hover:false});
+    },500);
+  }
+
   render() {
-    const { hover } = this.state;
+    const {hover, isMenuOpen} = this.state;
     const toolbarStyle = {
-      width:'50px',
-      height:'20px',
-      position:'absolute',
-      top:'0',
-      left:'0',
-      backgroundColor:'red',
-      zIndex:'1000'
+      width: '50px',
+      height: '20px',
+      position: 'absolute',
+      top: '0',
+      right: '0',
+      backgroundColor: 'white',
+      zIndex: '1000'
     };
+
     return (
       <div style={uiContainer} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
-        <span style={getBorderStyle('top', hover)}></span>
-        <span style={getBorderStyle('right', hover)}></span>
-        <span style={getBorderStyle('bottom', hover)}></span>
-        <span style={getBorderStyle('left', hover)}></span>
-        <div style={hover? toolbarStyle:{display:'none'}}></div>
+        <div style={{height: '100%', width: '100%',display: hover&&!isMenuOpen? 'block':'none'}}>
+          <span style={getBorderStyle('top')}></span>
+          <span style={getBorderStyle('right')}></span>
+          <span style={getBorderStyle('bottom')}></span>
+          <span style={getBorderStyle('left')}></span>
+          <UiBlockToolbar onMenuOpen={this.onMenuOpen} onMenuClose={this.onMenuClose}/>
+        </div>
       </div>);
   }
 }

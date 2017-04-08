@@ -52,27 +52,16 @@ class Container extends Component {
 
   render() {
     return (
+    <MuiThemeProvider>
       <div className={'layout-row'}>
         <div className={'flex-20'}>
           <SourceList />
-          <MuiThemeProvider>
-            <IconMenu
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            >
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Send feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Help" />
-              <MenuItem primaryText="Sign out" />
-            </IconMenu>
-          </MuiThemeProvider>
         </div>
         <div className={'flex'}>
           <DraggableBlock content={this.state.content} dnd={this.dnd} path={[]}/>
         </div>
       </div>
+    </MuiThemeProvider>
     );
   }
 }
