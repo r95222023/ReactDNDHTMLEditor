@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import { getComponent } from '../editor/basics'
+import { getComponent } from '../common/snippets'
 
 
 export default class Block extends Component {

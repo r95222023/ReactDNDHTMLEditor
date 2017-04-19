@@ -28,14 +28,22 @@ export default class UiBlock extends Component {
     this.onMenuOpen = this.onMenuOpen.bind(this);
     this.onMenuClose = this.onMenuClose.bind(this);
   }
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount () {
+    this.mounted = false;
+  }
 
   onMouseOver() {
+    if(!this.mounted) return;
     this.setState({hover: true});
     console.log('over', this.props.path)
   }
 
   onMouseOut() {
-    if (this.state.isMenuOpen) return;
+    if (!this.mounted||this.state.isMenuOpen) return;
     this.setState({hover: false});
     console.log('out', this.props.path)
   }
@@ -49,12 +57,13 @@ export default class UiBlock extends Component {
     this.state.isMenuOpen=false;
     //unfocus focused block
     setTimeout(()=>{
+      if(!this.mounted) return;
       this.setState({isMenuOpen: false, hover:false});
     },400);
   }
 
   render() {
-    if(this.props.forceClose) this.state.isMenuOpen=false;
+    const {path} = this.props;
     const {hover, isMenuOpen} = this.state;
     const toolbarStyle = {
       width: '50px',
@@ -73,7 +82,7 @@ export default class UiBlock extends Component {
           <UiBlockBorder direction={'right'} />
           <UiBlockBorder direction={'bottom'} />
           <UiBlockBorder direction={'left'} />
-          <UiBlockToolbar onMenuOpen={this.onMenuOpen} onMenuClose={this.onMenuClose}/>
+          <UiBlockToolbar path={path} onMenuOpen={this.onMenuOpen} onMenuClose={this.onMenuClose}/>
         </div>
       </div>);
   }

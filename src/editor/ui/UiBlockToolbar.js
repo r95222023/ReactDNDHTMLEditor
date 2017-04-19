@@ -22,10 +22,10 @@ export default class Toolbar extends Component {
   }
 
   render() {
-    const { onMenuOpen, onMenuClose } = this.props;
+    const { path, onMenuOpen, onMenuClose } = this.props;
     return (
       <div style={toolbarStyle}>
-        <MoreMenu onMenuOpen={onMenuOpen} onMenuClose={onMenuClose}/>
+        <MoreMenu path={path} onMenuOpen={onMenuOpen} onMenuClose={onMenuClose}/>
       </div>
     )
   }

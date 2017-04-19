@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import configDialog from './configDialog'
+import content from './content'
 
-const editor = combineReducers({
-  configDialog
+const myApp = combineReducers({
+  configDialog,
+  content
 });
 
-export default editor
+export default myApp

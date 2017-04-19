@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Source from './Source'
+import Source from '../draggables/Source'
 
 const defaultDiv ={
   minWidth:'300px',

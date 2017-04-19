@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import {getComponent} from '../editor/basics'
+import {getComponent} from '../../common/snippets'
 
 export default class Block extends Component {
   static propTypes = {
@@ -13,24 +13,17 @@ export default class Block extends Component {
     // this.state = {hover: false};
     // this.onMouseEnter = this.onMouseEnter.bind(this);
     // this.onMouseLeave = this.onMouseLeave.bind(this);
-    // this.dnd = props.dnd;
   }
 
   // onMouseEnter() {
-  //   const {dnd, path} = this.props;
-  //   console.log('enter', path);
-  //   dnd.onMouseOver(path);
+  //   console.log('enter');
+  //   this.setState({hover: true})
   // }
   //
   // onMouseLeave() {
-  //   const {dnd, path} = this.props;
-  //   let clonePath = path.slice();
-  //   clonePath.pop();
-  //   if(clonePath.length===0) clonePath='root';
-  //   console.log('leave', clonePath);
-  //   dnd.onMouseOver(clonePath);
+  //   console.log('leave');
+  //   this.setState({hover: false});
   // }
-
 
   render() {
     const {content, children} = this.props;
@@ -41,7 +34,7 @@ export default class Block extends Component {
           // onMouseEnter: this.onMouseEnter,
           // onMouseLeave: this.onMouseLeave,
           className: content.class,
-          style: Object.assign({position:'relative'},content.style) //TODO: study style in Block
+          style: content.style
         },
         content.props),
       children || null,

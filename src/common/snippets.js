@@ -16,9 +16,9 @@ export function setPath(obj, pList, value) {
   // console.log(pList, JSON.stringify(obj))
 }
 
-export function getPath(obj, pList) {
+export function getPath(obj, pList, level) {
   let schema = obj;  // a moving reference to internal objects within obj
-  let len = pList.length;
+  let len = pList.length+(level||0);
   for (let i = 0; i < len - 1; i++) {
     let elem = pList[i];
     if (!schema[elem]) return null;

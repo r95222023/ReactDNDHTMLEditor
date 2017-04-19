@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import {getComponent} from '../editor/basics'
+import {getComponent} from '../../common/snippets'
 
 export default class Block extends Component {
   static propTypes = {
@@ -10,27 +10,7 @@ export default class Block extends Component {
 
   constructor(props) {
     super(props);
-    // this.state = {hover: false};
-    // this.onMouseEnter = this.onMouseEnter.bind(this);
-    // this.onMouseLeave = this.onMouseLeave.bind(this);
-    // this.dnd = props.dnd;
   }
-
-  // onMouseEnter() {
-  //   const {dnd, path} = this.props;
-  //   console.log('enter', path);
-  //   dnd.onMouseOver(path);
-  // }
-  //
-  // onMouseLeave() {
-  //   const {dnd, path} = this.props;
-  //   let clonePath = path.slice();
-  //   clonePath.pop();
-  //   if(clonePath.length===0) clonePath='root';
-  //   console.log('leave', clonePath);
-  //   dnd.onMouseOver(clonePath);
-  // }
-
 
   render() {
     const {content, children} = this.props;

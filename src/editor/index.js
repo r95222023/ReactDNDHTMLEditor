@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Container from './Container';
-import Source from './Source';
+import Container from './containers/_Container';
 
-export default class NestingDropTargets extends Component {
+export default class Editor extends Component {
   render() {
     return (
       <div className={'layout-row'}>

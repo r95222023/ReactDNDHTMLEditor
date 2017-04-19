@@ -1,18 +1,11 @@
-import MuiThemeProvider from '../material-ui/styles/MuiThemeProvider';
-import IconMenu from '../material-ui/IconMenu';
-import MenuItem from '../material-ui/MenuItem';
-import IconButton from '../material-ui/IconButton';
-import MoreVertIcon from '../material-ui/svg-icons/navigation/more-vert';
-
+import MuiThemeProvider from '../../material-ui/styles/MuiThemeProvider';
 import React, {Component} from 'react';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import DraggableBlock from './DraggableBlock';
+import DraggableBlock from '../draggables/DraggableBlock';
 
-import SourceList from './SourceList';
-import ConfigDialog from './ui/_ConfigDialog'
-
-import {insert, interchange, remove, modify, onMouseOver} from './methods'
+import SourceList from '../components/SourceList';
+import ConfigDialog from '../ui/_ConfigDialog'
 
 let testContent = {
   tag: 'div',
@@ -40,15 +33,8 @@ class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: props.content || testContent,
+      content: props.content,
     };
-    let dnd = {};
-    dnd.insert = insert.bind(this);
-    dnd.remove = remove.bind(this);
-    dnd.modify = modify.bind(this);
-    dnd.interchange = interchange.bind(this);
-    dnd.onMouseOver = onMouseOver.bind(this);
-    this.dnd = dnd;
   }
 
   render() {
@@ -59,7 +45,7 @@ class Container extends Component {
           <SourceList />
         </div>
         <div className={'flex'}>
-          <DraggableBlock content={this.state.content} dnd={this.dnd} path={[]}/>
+          <DraggableBlock content={this.state.content} path={[]}/>
         </div>
         <ConfigDialog/>
       </div>

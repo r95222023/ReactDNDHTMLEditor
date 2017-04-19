@@ -3,8 +3,8 @@ import {findDOMNode} from 'react-dom';
 import {DropTarget, DragSource} from 'react-dnd';
 import ItemTypes from './ItemTypes';
 // import SimpleBlock from './SimpleBlock';
-import EditableBlock from './EditableBlock';
-import UiBlock from './ui/UiBlock';
+import EditableBlock from '../components/EditableBlock';
+import UiBlock from '../ui/_UiBlock';
 
 
 
@@ -23,41 +23,41 @@ function getRelativePosition(component, mousePosition) {
 function getContent(src) {
   return src; //TODO
 }
-
-function dropOrHover(type, props, monitor, component) {
-  // const hasDroppedOnChild = monitor.didDrop();
-  // if (hasDroppedOnChild && !props.greedy) {
-  //   return;
-  // }
-
-  let relativePos = getRelativePosition(component, monitor.getClientOffset());
-  if (!relativePos) return;
-  if (type === 'drop') {
-    //insert
-    let content = getContent(monitor.getItem());
-    let {layout, index, dnd, path} = props;
-
-    index += relativePos[layout === 'column' ? 1 : 0] > 0 ? 1 : -1;
-
-    dnd.insert(path, index, content, type === 'hover');
-  } else {
-    //interchange
-    if (type === 'drop') return;
-    let dragIndex = monitor.getItem().index;
-    let hoverIndex = props.index;
-
-    // Dragging upwards or leftward
-    if (dragIndex < hoverIndex && relativePos[layout === 'column' ? 1 : 0] < 0) {
-      return;
-    }
-    // Dragging downwards or rightward
-    if (dragIndex > hoverIndex && relativePos[layout === 'column' ? 1 : 0] < 0) {
-      return;
-    }
-    //if item passes the middle
-    // dnd.interchange(path, dragIndex, hoverIndex);
-  }
-}
+//
+// function dropOrHover(type, props, monitor, component) {
+//   // const hasDroppedOnChild = monitor.didDrop();
+//   // if (hasDroppedOnChild && !props.greedy) {
+//   //   return;
+//   // }
+//
+//   let relativePos = getRelativePosition(component, monitor.getClientOffset());
+//   if (!relativePos) return;
+//   if (type === 'drop') {
+//     //insert
+//     let content = getContent(monitor.getItem());
+//     let {layout, index, dnd, path} = props;
+//
+//     index += relativePos[layout === 'column' ? 1 : 0] > 0 ? 1 : -1;
+//
+//     dnd.insert(path, index, content, type === 'hover');
+//   } else {
+//     //interchange
+//     if (type === 'drop') return;
+//     let dragIndex = monitor.getItem().index;
+//     let hoverIndex = props.index;
+//
+//     // Dragging upwards or leftward
+//     if (dragIndex < hoverIndex && relativePos[layout === 'column' ? 1 : 0] < 0) {
+//       return;
+//     }
+//     // Dragging downwards or rightward
+//     if (dragIndex > hoverIndex && relativePos[layout === 'column' ? 1 : 0] < 0) {
+//       return;
+//     }
+//     //if item passes the middle
+//     // dnd.interchange(path, dragIndex, hoverIndex);
+//   }
+// }
 
 const boxTarget = {
   drop(props, monitor, component) {
@@ -65,7 +65,7 @@ const boxTarget = {
     console.log('drop')
   },
   hover(props, monitor, component) {
-    if (!props.dnd) return;
+    // if (!props.dnd) return;
     // console.log(props)
     // dropOrHover('hover', props, monitor, component);
     console.log('hover')
@@ -83,16 +83,11 @@ const boxSource = {
   },
 };
 
-let onHoverStyle = {
-  border: '1px dashed gray',
-};
-
 class DraggableBlock extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-    dnd: PropTypes.object.isRequired,
-    isOverCurrent: PropTypes.bool.isRequired,
+    // isOverCurrent: PropTypes.bool.isRequired,
     content: PropTypes.object.isRequired,
     path: PropTypes.array.isRequired,
     children: PropTypes.node,
@@ -103,7 +98,7 @@ class DraggableBlock extends Component {
   }
 
   render() {
-    const {isOverCurrent, connectDropTarget, connectDragSource, content, dnd, path} = this.props;
+    const {isOverCurrent, connectDropTarget, connectDragSource, content, path} = this.props;
 
     if (isOverCurrent) {
       //TODO:set  global selected itemId
@@ -127,7 +122,7 @@ class DraggableBlock extends Component {
             connectDropTarget: connect.dropTarget(),
             isOverCurrent: monitor.isOver({shallow: true}),
           }))(DraggableBlock)),
-          {content: child, dnd, path: newPath, key: index},
+          {content: child, path: newPath, key: index},
         ))
       });
     }
@@ -140,7 +135,6 @@ class DraggableBlock extends Component {
       {
         content,
         path,
-        dnd,
         ref: (instance) => {
           connectDropTarget(findDOMNode(instance));
           connectDragSource(findDOMNode(instance));
