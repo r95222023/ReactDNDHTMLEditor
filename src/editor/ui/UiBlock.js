@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import UiBlockBorder from './UiBlockBorder';
 import UiBlockToolbar from './UiBlockToolbar';
 
 const uiContainer = {
@@ -12,49 +13,6 @@ const uiContainer = {
   lineHeight: '1rem'
 };
 
-const borderStyle = {};
-borderStyle.top = {
-  top: '0',
-  right: '0',
-  left: '0',
-  height: '3px',
-  borderTopLeftRadius: '5px',
-  borderTopRightRadius: '5px'
-};
-borderStyle.right = {
-  top: '0',
-  right: '0',
-  bottom: '0',
-  width: '3px',
-  borderTopRightRadius: '5px',
-  borderBottomRightRadius: '5px'
-};
-borderStyle.bottom = {
-  right: '0',
-  bottom: '0',
-  left: '0',
-  height: '3px',
-  borderBottomRightRadius: '5px',
-  borderBottomLeftRadius: '5px'
-};
-borderStyle.left = {
-  top: '0',
-  bottom: '0',
-  left: '0',
-  width: '3px',
-  borderTopLeftRadius: '5px',
-  borderBottomLeftRadius: '5px'
-};
-borderStyle.common = {
-  backgroundColor: '#41BB99',
-  position: 'absolute',
-  zIndex: '11'
-};
-
-
-function getBorderStyle(direction) {
-  return Object.assign({display: 'block'}, borderStyle.common, borderStyle[direction])
-}
 
 export default class UiBlock extends Component {
   static propTypes = {
@@ -83,13 +41,13 @@ export default class UiBlock extends Component {
   }
 
   onMenuOpen() {
-    console.log('menu open')
     this.state.isMenuOpen=true;
     // this.setState({isMenuOpen: true});
   }
 
   onMenuClose() {
     this.state.isMenuOpen=false;
+    //unfocus focused block
     setTimeout(()=>{
       this.setState({isMenuOpen: false, hover:false});
     },500);
@@ -110,10 +68,10 @@ export default class UiBlock extends Component {
     return (
       <div style={uiContainer} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
         <div style={{height: '100%', width: '100%',display: hover&&!isMenuOpen? 'block':'none'}}>
-          <span style={getBorderStyle('top')}></span>
-          <span style={getBorderStyle('right')}></span>
-          <span style={getBorderStyle('bottom')}></span>
-          <span style={getBorderStyle('left')}></span>
+          <UiBlockBorder direction={'top'} />
+          <UiBlockBorder direction={'right'} />
+          <UiBlockBorder direction={'bottom'} />
+          <UiBlockBorder direction={'left'} />
           <UiBlockToolbar onMenuOpen={this.onMenuOpen} onMenuClose={this.onMenuClose}/>
         </div>
       </div>);

@@ -4,6 +4,7 @@ import Menu from '../../material-ui/Menu';
 import MenuItem from '../../material-ui/MenuItem';
 import IconButton from '../../material-ui/IconButton';
 import MoreVertIcon from '../../material-ui/svg-icons/navigation/more-vert';
+import ConfigMenuItem from './_ConfigMenuItem';
 
 export default class MoreMenu extends React.Component {
 
@@ -28,7 +29,7 @@ export default class MoreMenu extends React.Component {
   handleRequestClose = () => {
     const { onMenuClose } = this.props;
     onMenuClose();
-
+    console.log('close')
     this.setState({
       open: false,
     });
@@ -50,7 +51,7 @@ export default class MoreMenu extends React.Component {
             <MenuItem primaryText="Refresh" />
             <MenuItem primaryText="Help &amp; feedback" />
             <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Sign out" />
+            <ConfigMenuItem closeMenu={this.handleRequestClose} />
           </Menu>
         </Popover>
       </div>
