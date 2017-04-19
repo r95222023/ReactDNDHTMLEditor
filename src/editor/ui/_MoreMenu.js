@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
-import ConfigMenuItem from './ConfigMenuItem'
+import MoreMenu from './MoreMenu'
 import { toggleConfigDialog } from '../../actions'
 
 const mapStateToProps = (state) => {
-  return {
-    open: state.configDialog.open
-  }
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -16,9 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const _ConfigMenuItem = connect(
+const _MoreMenu = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConfigMenuItem)
+)(MoreMenu)
 
-export default _ConfigMenuItem
+export default _MoreMenu

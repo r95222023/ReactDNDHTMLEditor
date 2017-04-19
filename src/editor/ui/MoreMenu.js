@@ -4,10 +4,8 @@ import Menu from '../../material-ui/Menu';
 import MenuItem from '../../material-ui/MenuItem';
 import IconButton from '../../material-ui/IconButton';
 import MoreVertIcon from '../../material-ui/svg-icons/navigation/more-vert';
-import ConfigMenuItem from './_ConfigMenuItem';
 
 export default class MoreMenu extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +33,11 @@ export default class MoreMenu extends React.Component {
     });
   };
 
+  openConfigDialog = ()=>{
+    this.handleRequestClose();
+    this.props.toggleConfigDialog();
+  };
+
   render() {
     return (
       <div>
@@ -51,7 +54,7 @@ export default class MoreMenu extends React.Component {
             <MenuItem primaryText="Refresh" />
             <MenuItem primaryText="Help &amp; feedback" />
             <MenuItem primaryText="Settings" />
-            <ConfigMenuItem closeMenu={this.handleRequestClose} />
+            <MenuItem onClick={this.openConfigDialog} primaryText={'Config'}/>
           </Menu>
         </Popover>
       </div>

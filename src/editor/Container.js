@@ -10,6 +10,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import DraggableBlock from './DraggableBlock';
 
 import SourceList from './SourceList';
+import ConfigDialog from './ui/_ConfigDialog'
 
 import {insert, interchange, remove, modify, onMouseOver} from './methods'
 
@@ -60,6 +61,7 @@ class Container extends Component {
         <div className={'flex'}>
           <DraggableBlock content={this.state.content} dnd={this.dnd} path={[]}/>
         </div>
+        <ConfigDialog/>
       </div>
     </MuiThemeProvider>
     );

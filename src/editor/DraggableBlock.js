@@ -4,7 +4,7 @@ import {DropTarget, DragSource} from 'react-dnd';
 import ItemTypes from './ItemTypes';
 // import SimpleBlock from './SimpleBlock';
 import EditableBlock from './EditableBlock';
-import UiBlock from './ui/UiBlock';
+import UiBlock from './ui/_UiBlock';
 
 
 

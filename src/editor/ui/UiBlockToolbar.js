@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import MoreMenu from './MoreMenu';
+import MoreMenu from './_MoreMenu';
 
 const toolbarStyle = {
   width:'50px',

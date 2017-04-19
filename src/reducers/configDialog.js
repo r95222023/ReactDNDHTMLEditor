@@ -1,4 +1,6 @@
 const configDialog = (state = {open:false}, action) => {
+  console.log(action)
+
   switch (action.type) {
     case 'OPEN_CONFIG_DIALOG':
       return {open:true};

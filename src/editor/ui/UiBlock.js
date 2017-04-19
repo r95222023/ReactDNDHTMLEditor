@@ -50,10 +50,11 @@ export default class UiBlock extends Component {
     //unfocus focused block
     setTimeout(()=>{
       this.setState({isMenuOpen: false, hover:false});
-    },500);
+    },400);
   }
 
   render() {
+    if(this.props.forceClose) this.state.isMenuOpen=false;
     const {hover, isMenuOpen} = this.state;
     const toolbarStyle = {
       width: '50px',
