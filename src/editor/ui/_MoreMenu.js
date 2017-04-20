@@ -3,7 +3,7 @@ import MoreMenu from './MoreMenu'
 import {toggleConfigDialog} from '../../actions'
 
 const mapStateToProps = (state) => {
-  return {}
+  return {menus:state.menus}
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -50,6 +50,7 @@ export default class MoreMenu extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <IconButton onTouchTap={this.handleTouchTap} iconStyle={{
