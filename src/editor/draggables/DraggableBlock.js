@@ -129,7 +129,6 @@ class DraggableBlock extends Component {
 
     children = children.length? children:null;
 
-
     return React.createElement(
       EditableBlock,
       {

@@ -13,7 +13,8 @@ export default class Block extends Component {
   }
 
   render() {
-    const {content, children} = this.props;
+    let {content, children, path} = this.props;
+    console.log(content)
     console.log('render')
     return React.createElement(
       getComponent(content.tag),
@@ -21,7 +22,7 @@ export default class Block extends Component {
           // onMouseEnter: this.onMouseEnter,
           // onMouseLeave: this.onMouseLeave,
           className: content.class,
-          style: Object.assign({position:'relative'},content.style) //TODO: study style in Block
+          style: Object.assign({position: 'relative'}, content.style) //TODO: study style in Block
         },
         content.props),
       children || null,

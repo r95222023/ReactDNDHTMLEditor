@@ -22,67 +22,33 @@ export default class UiBlock extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {hover: false, isMenuOpen:false};
+    this.state = {hover: false};
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
-    this.onMenuOpen = this.onMenuOpen.bind(this);
-    this.onMenuClose = this.onMenuClose.bind(this);
-  }
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount () {
-    this.mounted = false;
   }
 
   onMouseOver() {
-    if(!this.mounted) return;
     this.setState({hover: true});
     console.log('over', this.props.path)
   }
 
   onMouseOut() {
-    if (!this.mounted||this.state.isMenuOpen) return;
     this.setState({hover: false});
     console.log('out', this.props.path)
   }
 
-  onMenuOpen() {
-    this.state.isMenuOpen=true;
-    // this.setState({isMenuOpen: true});
-  }
-
-  onMenuClose() {
-    this.state.isMenuOpen=false;
-    //unfocus focused block
-    setTimeout(()=>{
-      if(!this.mounted) return;
-      this.setState({isMenuOpen: false, hover:false});
-    },400);
-  }
-
   render() {
     const {path} = this.props;
-    const {hover, isMenuOpen} = this.state;
-    const toolbarStyle = {
-      width: '50px',
-      height: '20px',
-      position: 'absolute',
-      top: '0',
-      right: '0',
-      backgroundColor: 'white',
-      zIndex: '1000'
-    };
+    const {hover} = this.state;
 
     return (
       <div style={uiContainer} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
-        <div style={{height: '100%', width: '100%',display: hover&&!isMenuOpen? 'block':'none'}}>
+        <div style={{height: '100%', width: '100%',display: hover? 'block':'none'}}>
           <UiBlockBorder direction={'top'} />
           <UiBlockBorder direction={'right'} />
           <UiBlockBorder direction={'bottom'} />
           <UiBlockBorder direction={'left'} />
-          <UiBlockToolbar path={path} onMenuOpen={this.onMenuOpen} onMenuClose={this.onMenuClose}/>
+          <UiBlockToolbar path={path}/>
         </div>
       </div>);
   }

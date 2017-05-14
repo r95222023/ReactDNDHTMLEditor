@@ -1,7 +1,7 @@
 import React from 'react';
-import MenuItem from '../../material-ui/MenuItem';
 import Dialog from '../../material-ui/Dialog';
 import FlatButton from '../../material-ui/FlatButton';
+import ConfigTabs from './_ConfigTabs';
 
 export default class UiMenuItem extends React.Component {
   constructor(props) {
@@ -9,18 +9,18 @@ export default class UiMenuItem extends React.Component {
   }
 
   render() {
-    const {toggleConfigDialog}=this.props;
+    const {closeConfigDialog, path, open}=this.props;
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={toggleConfigDialog}
+        onTouchTap={closeConfigDialog}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={toggleConfigDialog}
+        onTouchTap={closeConfigDialog}
       />,
     ];
 
@@ -30,10 +30,11 @@ export default class UiMenuItem extends React.Component {
           title="Dialog With Actions"
           actions={actions}
           modal={false}
-          open={this.props.open}
-          onRequestClose={toggleConfigDialog}
+          open={open}
+          onRequestClose={closeConfigDialog}
+          bodyStyle={{padding:0}}
         >
-          The actions in this window were passed in as an array of React objects.
+          <ConfigTabs path={path}/>
         </Dialog>
       </div>
     );

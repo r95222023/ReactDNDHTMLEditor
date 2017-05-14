@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
-import ConfigDialog from './ConfigDialog'
-import { closeConfigDialog } from '../../actions'
+import ConfigTabs from './ConfigTabs'
 
 const mapStateToProps = (state) => {
-  return state.configDialog
+  return {content:state.content}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -14,9 +13,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const _ConfigDialog = connect(
+const _ConfigTabs = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConfigDialog)
+)(ConfigTabs)
 
-export default _ConfigDialog
+export default _ConfigTabs

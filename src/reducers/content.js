@@ -1,5 +1,5 @@
 import {setPath, getPath, setExclusiveProp, deleteProp} from '../common/snippets'
-
+import {defaults} from '../common/blockTypes'
 
 const defaultContent = {
   tag: 'div',
@@ -21,41 +21,30 @@ const defaultContent = {
     style: {width: '200px', height: '100px', backgroundColor: 'blue', margin: '10px'}
   }],
 };
-
-function parsePath(path) {
-  let pList = [];
-  path.forEach((p) => {
-    pList.push('children');
-    pList.push(p);
-  });
-  return pList;
-}
-
-
 function insert(content, action) {
-  const {path, item, index} = action;
-  const pList = parsePath(path);
+  const {path, index, itemType} = action;
+  const itemStr = JSON.stringify(defaults[itemType]); //make a clone
+  const item = JSON.parse(itemStr);
   let _content = Object.assign({}, content);
-  let target = getPath(_content, pList);
-
+  let target = getPath(_content, path);
   if (target.children) {
     if(!isNaN(index)){
       target.children.splice( index, 0, item);
     } else {
       target.children.push(item)
+
     }
   } else {
     target.children = [item];
   }
-
+  console.log(_content)
   return _content
 }
 
 function interchange(action) {
   const {content, path, hoverIndex, dragIndex} = action;
   let _content = Object.assign({}, content);
-  let pList = parsePath(path);
-  let target = getPath(_content, pList);
+  let target = getPath(_content, path);
   const item = target[dragIndex];
   target.splice(dragIndex, 1);
   target.splice(hoverIndex, 0, item);
@@ -63,9 +52,8 @@ function interchange(action) {
 
 function remove(content, action) {
   const {path} = action;
-  let pList = parsePath(path);
   let _content = Object.assign({}, content);
-  let target = getPath(_content, pList,-2);
+  let target = getPath(_content, path,-2);
   target.children.splice(path[path.length-1], 1);
   return _content
 }
@@ -80,14 +68,14 @@ function modify(action) {
 
 function toggleMoreMenu(){}
 
-const content = (state = defaultContent, action) => {
+const content = (content = defaultContent, action) => {
   switch (action.type) {
     case 'INSERT_ITEM':
-      return insert(state, action);
+      return insert(content, action);
     case 'REMOVE_ITEM':
-      return remove(state, action);
+      return remove(content, action);
     default:
-      return state
+      return content
   }
 };
 

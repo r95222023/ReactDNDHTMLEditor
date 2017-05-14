@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import MoreMenu from './_MoreMenu';
+import MoreMenu from './_Menu';
 
 const toolbarStyle = {
   width:'50px',
@@ -22,10 +22,10 @@ export default class Toolbar extends Component {
   }
 
   render() {
-    const { path, onMenuOpen, onMenuClose } = this.props;
+    const { path } = this.props;
     return (
       <div style={toolbarStyle}>
-        <MoreMenu path={path} onMenuOpen={onMenuOpen} onMenuClose={onMenuClose}/>
+        <MoreMenu path={path}/>
       </div>
     )
   }

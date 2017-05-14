@@ -3,8 +3,19 @@ export function getComponent(tag){
   return tag
 }
 
-export function setPath(obj, pList, value) {
+function parsePath(path) {
+  let pList = [];
+  path.forEach((p) => {
+    pList.push('children');
+    pList.push(p);
+  });
+  return pList;
+}
+
+
+export function setPath(obj, path, value) {
   let schema = obj;  // a moving reference to internal objects within obj
+  let pList = parsePath(path);
   let len = pList.length;
   for (let i = 0; i < len - 1; i++) {
     let elem = pList[i];
@@ -16,8 +27,9 @@ export function setPath(obj, pList, value) {
   // console.log(pList, JSON.stringify(obj))
 }
 
-export function getPath(obj, pList, level) {
+export function getPath(obj, path, level) {
   let schema = obj;  // a moving reference to internal objects within obj
+  let pList = parsePath(path);
   let len = pList.length+(level||0);
   for (let i = 0; i < len - 1; i++) {
     let elem = pList[i];

@@ -4,14 +4,14 @@ import { toggleConfigDialog } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
-    forceClose: state.configDialog.open
+    menus:state.menus
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleConfigDialog: () => {
-      dispatch(toggleConfigDialog())
+    toggleConfigDialog: (path) => {
+      dispatch(toggleConfigDialog(path))
     }
   }
 }

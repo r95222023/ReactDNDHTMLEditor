@@ -4,38 +4,37 @@ import Menu from '../../material-ui/Menu';
 import MenuItem from '../../material-ui/MenuItem';
 import IconButton from '../../material-ui/IconButton';
 import MoreVertIcon from '../../material-ui/svg-icons/navigation/more-vert';
+function getMenuId(path){
+  return 'uiTool'+JSON.stringify(path)
+}
 
 export default class MoreMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    };
+  }
+
+  getMenu(){
+    const {menus, path} =this.props;
+    return menus[getMenuId(path)]||{open:false}
   }
 
   handleTouchTap = (event) => {
-    const {onMenuOpen} = this.props;
+    const {openMenu, path} = this.props;
     // This prevents ghost click.
+    openMenu(getMenuId(path), event.currentTarget);
     event.preventDefault();
-    onMenuOpen();
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
   };
 
   handleRequestClose = () => {
-    const {onMenuClose} = this.props;
-    onMenuClose();
+    const {closeMenu, path} = this.props;
+    closeMenu(getMenuId(path),event.currentTarget);
     console.log('close')
-    this.setState({
-      open: false,
-    });
   };
 
   openConfigDialog = () => {
+    const {path, openConfigDialog} =this.props;
     this.handleRequestClose();
-    this.props.toggleConfigDialog();
+    openConfigDialog(path);
   };
   removeItem = () => {
     const {path} = this.props;
@@ -46,10 +45,11 @@ export default class MoreMenu extends React.Component {
   insertItem = () =>{
     const {path} = this.props;
     this.handleRequestClose();
-    this.props.insertItem(path, {tag:'div', style: {width:'10px',height:'10px', backgroundColor:'red'}});
+    this.props.insertItem(path, {itemType:'row'});
   }
 
   render() {
+    const menuState = this.getMenu();
     return (
       <div>
         <IconButton onTouchTap={this.handleTouchTap} iconStyle={{
@@ -59,14 +59,14 @@ export default class MoreMenu extends React.Component {
           marginTop: '-25px'
         }}><MoreVertIcon /></IconButton>
         <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
+          open={menuState.open}
+          anchorEl={menuState.anchorEl}
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
           animation={PopoverAnimationVertical}
         >
-          <Menu>
+          <Menu style={{display:menuState.open? 'block':'none'}}>
             <MenuItem primaryText="Refresh"/>
             <MenuItem onClick={this.insertItem} primaryText="Insert"/>
             <MenuItem onClick={this.openConfigDialog} primaryText={'Config'}/>
