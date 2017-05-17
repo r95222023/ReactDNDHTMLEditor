@@ -6,27 +6,8 @@ import DraggableBlock from '../draggables/DraggableBlock';
 
 import SourceList from '../components/SourceList';
 import ConfigDialog from '../ui/_ConfigDialog'
+import FlatButton from '../../material-ui/FlatButton';
 
-let testContent = {
-  tag: 'div',
-  class: 'layout-row',
-  style: {width: '500px', height: '200px', backgroundColor: 'yellow'},
-  children: [{
-    tag: 'div',
-    class: 'layout-column',
-    style: {width: '200px', height: '100px', backgroundColor: 'blue', margin: '10px'},
-    children: [{
-      tag: 'div',
-      style: {width: '100px', height: '50px', backgroundColor: 'green', margin: '10px'}
-    }, {
-      tag: 'div',
-      style: {width: '100px', height: '50px', backgroundColor: 'green', margin: '10px'}
-    }]
-  }, {
-    tag: 'div',
-    style: {width: '200px', height: '100px', backgroundColor: 'blue', margin: '10px'}
-  }],
-};
 
 
 class Container extends Component {
@@ -42,10 +23,11 @@ class Container extends Component {
     <MuiThemeProvider>
       <div className={'layout-row'}>
         <div className={'flex-20'}>
+          <FlatButton onTouchTap={this.props.importContent} label="Import" />
           <SourceList />
         </div>
         <div className={'flex'}>
-          <DraggableBlock content={this.state.content} path={[]}/>
+          <DraggableBlock content={this.props.content} path={[]}/>
         </div>
         <ConfigDialog/>
       </div>

@@ -25,6 +25,7 @@ function insert(content, action) {
   const {path, index, itemType} = action;
   const itemStr = JSON.stringify(defaults[itemType]); //make a clone
   const item = JSON.parse(itemStr);
+
   let _content = Object.assign({}, content);
   let target = getPath(_content, path);
   if (target.children) {
@@ -66,7 +67,11 @@ function modify(action) {
   //
 }
 
-function toggleMoreMenu(){}
+
+function importContent(content){
+  const contentStr = JSON.stringify(content);
+  return JSON.parse(contentStr);
+}
 
 const content = (content = defaultContent, action) => {
   switch (action.type) {
@@ -74,6 +79,9 @@ const content = (content = defaultContent, action) => {
       return insert(content, action);
     case 'REMOVE_ITEM':
       return remove(content, action);
+    case 'IMPORT':
+      console.log( importContent(action.content))
+      return importContent(action.content);
     default:
       return content
   }
